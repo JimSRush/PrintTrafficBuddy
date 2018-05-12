@@ -185,7 +185,8 @@ namespace PrintTrafficBuddy.Tools
           nullable = filmDetails.Country;
 		  str2 = nullable.ToString();
         }
-        Phrase phrase2 = new Phrase(string.Format(format2, (object) str2), filmDetails.OutSuspect ? FontFactory.GetFont("Arial", 10f, 2) : FontFactory.GetFont("Arial", 10f));
+
+		Phrase phrase2 = new Phrase(string.Format(format2, (object) str2.Substring(0, Math.Min(15, str2.Length))), filmDetails.OutSuspect ? FontFactory.GetFont("Arial", 10f, 2) : FontFactory.GetFont("Arial", 10f));
         columnText3.AddText(phrase2);
         columnText1.Go();
 
