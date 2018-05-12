@@ -39,6 +39,10 @@ namespace PrintTrafficBuddy.Model
 
     public bool OutSuspect { get; set; }
 
+	public string WellingtonScreeningNo { get; set; }
+
+	public string AucklandScreeningNo { get; set; }
+
     public List<ScheduleInfo> ScheduledTimes { get; set; }
 
     public FilmDetails()

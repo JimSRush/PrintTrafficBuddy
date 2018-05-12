@@ -192,8 +192,8 @@ namespace PrintTrafficBuddy.Tools
         columnText1.AddText(new Phrase(string.Format("{0} / {1}", (object) filmDetails.Resolution, (object) filmDetails.Ratio), FontFactory.GetFont("Arial", 8f)));
         columnText1.Go();
 
-        columnText1.AddText(new Phrase(" "));
-        columnText1.Go();
+		columnText1.AddText(new Phrase(string.Format("{0} / {1}", (object)filmDetails.AucklandScreeningNo, (object)filmDetails.WellingtonScreeningNo), FontFactory.GetFont("Arial", 8f)));
+		columnText1.Go();
 
         columnText1.AddText(new Phrase(runName, FontFactory.GetFont("Arial", 16f)));
         columnText1.Go();

@@ -47,6 +47,10 @@ namespace PrintTrafficBuddy.Tools
 
 	public string ResolutionCell { get; set; }
 
+	public string AucklandScreeningNoCell { get; set; }
+
+	public string WellingtonScreeningNoCell { get; set; }
+
 
     public ExcelExtractor()
     {
@@ -64,7 +68,8 @@ namespace PrintTrafficBuddy.Tools
 	  this.CountryCell = ConfigurationHelper.GetSetting("ExcelOriginColumn", "J");
 	  this.ResolutionCell = ConfigurationHelper.GetSetting("ExcelOriginColumn", "O");
 
-
+	  this.AucklandScreeningNoCell = ConfigurationHelper.GetSetting("ExcelOriginColumn", "Z");
+	  this.WellingtonScreeningNoCell = ConfigurationHelper.GetSetting("ExcelOriginColumn", "AA");
     }
 
     [DllImport("user32.dll", SetLastError = true)]
@@ -95,7 +100,9 @@ namespace PrintTrafficBuddy.Tools
             Out = TypeExtensions.AsSafeNullableDateTime(worksheet.get_Range((object) (this.OutCell + (object) index), (object) Missing.Value).Text),
             OutSuspect = (bool) worksheet.get_Range((object) (this.OutCell + (object) index), (object) Missing.Value).Font.Italic,
             Leaving = TypeExtensions.AsSafeDateTime(worksheet.get_Range((object) (this.LeavingCell + (object) index), (object) Missing.Value).Text),
-            OriginatingRegion = worksheet.get_Range((object) (this.OriginCell + (object) index), (object) Missing.Value).Text.ToString().Trim().ToUpper()
+            OriginatingRegion = worksheet.get_Range((object) (this.OriginCell + (object) index), (object) Missing.Value).Text.ToString().Trim().ToUpper(),
+			WellingtonScreeningNo = worksheet.get_Range((object)(this.WellingtonScreeningNoCell + (object)index), (object)Missing.Value).Text.ToString(),
+			AucklandScreeningNo = worksheet.get_Range((object)(this.AucklandScreeningNoCell + (object)index), (object)Missing.Value).Text.ToString()
           });
         else
           break;
