@@ -41,17 +41,27 @@ namespace PrintTrafficBuddy.Tools
 
     public string OriginCell { get; set; }
 
+	public string LanguageCell { get; set; }
+
+	public string CountryCell { get; set; }
+
+
     public ExcelExtractor()
     {
       this.TitleCell = ConfigurationHelper.GetSetting("ExcelTitleColumn", "C");
-      this.GenreCell = ConfigurationHelper.GetSetting("ExcelGenreColumn", "DU");
+      this.GenreCell = ConfigurationHelper.GetSetting("ExcelGenreColumn", "DW");
       this.GaugeCell = ConfigurationHelper.GetSetting("ExcelGaugeColumn", "N");
-      this.RatioCell = ConfigurationHelper.GetSetting("ExcelRatioColumn", "O");
-      this.RunTimeCell = ConfigurationHelper.GetSetting("ExcelRunTimeColumn", "K");
+      this.RatioCell = ConfigurationHelper.GetSetting("ExcelRatioColumn", "Q");
+      this.RunTimeCell = ConfigurationHelper.GetSetting("ExcelRunTimeColumn", "L");
       this.InCell = ConfigurationHelper.GetSetting("ExcelInColumn", "BB");
       this.OutCell = ConfigurationHelper.GetSetting("ExcelOutColumn", "BI");
       this.LeavingCell = ConfigurationHelper.GetSetting("ExcelLeavingColumn", "AZ");
       this.OriginCell = ConfigurationHelper.GetSetting("ExcelOriginColumn", "AT");
+
+	  this.LanguageCell = ConfigurationHelper.GetSetting("ExcelOriginColumn", "I");
+	  this.CountryCell = ConfigurationHelper.GetSetting("ExcelOriginColumn", "J");
+
+
     }
 
     [DllImport("user32.dll", SetLastError = true)]
@@ -75,6 +85,8 @@ namespace PrintTrafficBuddy.Tools
             Ratio = worksheet.get_Range((object) (this.RatioCell + (object) index), (object) Missing.Value).Text.ToString(),
             RunTime = TypeExtensions.AsSafeInt32(worksheet.get_Range((object) (this.RunTimeCell + (object) index), (object) Missing.Value).Value2),
             In = TypeExtensions.AsSafeNullableDateTime(worksheet.get_Range((object) (this.InCell + (object) index), (object) Missing.Value).Text),
+			Language = worksheet.get_Range((object)(this.LanguageCell + (object)index), (object)Missing.Value).Text.ToString(),
+			Country = worksheet.get_Range((object)(this.CountryCell + (object)index), (object)Missing.Value).Text.ToString(),
             InSuspect = (bool) worksheet.get_Range((object) (this.InCell + (object) index), (object) Missing.Value).Font.Italic,
             Out = TypeExtensions.AsSafeNullableDateTime(worksheet.get_Range((object) (this.OutCell + (object) index), (object) Missing.Value).Text),
             OutSuspect = (bool) worksheet.get_Range((object) (this.OutCell + (object) index), (object) Missing.Value).Font.Italic,

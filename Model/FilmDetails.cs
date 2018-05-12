@@ -29,6 +29,11 @@ namespace PrintTrafficBuddy.Model
 
     public DateTime? Out { get; set; }
 
+	public string Language { get; set; }
+
+	public string Country { get; set; }
+
+
     public bool InSuspect { get; set; }
 
     public bool OutSuspect { get; set; }

@@ -39,6 +39,14 @@ namespace PrintTrafficBuddy.Tools
             document.NewPage();
             NamePlateGenerator.Emit(document, directContent, Enumerable.ToList<FilmDetails>(Enumerable.Where<FilmDetails>((IEnumerable<FilmDetails>) films, (Func<FilmDetails, bool>) (f => f.Genre == genre))), "D");
             document.NewPage();
+			NamePlateGenerator.Emit(document, directContent, Enumerable.ToList<FilmDetails>(Enumerable.Where<FilmDetails>((IEnumerable<FilmDetails>)films, (Func<FilmDetails, bool>)(f => f.Genre == genre))), "E");
+			document.NewPage();
+			NamePlateGenerator.Emit(document, directContent, Enumerable.ToList<FilmDetails>(Enumerable.Where<FilmDetails>((IEnumerable<FilmDetails>)films, (Func<FilmDetails, bool>)(f => f.Genre == genre))), "F");
+			document.NewPage();
+			NamePlateGenerator.Emit(document, directContent, Enumerable.ToList<FilmDetails>(Enumerable.Where<FilmDetails>((IEnumerable<FilmDetails>)films, (Func<FilmDetails, bool>)(f => f.Genre == genre))), "G");
+			document.NewPage();
+			NamePlateGenerator.Emit(document, directContent, Enumerable.ToList<FilmDetails>(Enumerable.Where<FilmDetails>((IEnumerable<FilmDetails>)films, (Func<FilmDetails, bool>)(f => f.Genre == genre))), "H");
+			document.NewPage();
             document.Close();
           }
         }
@@ -145,44 +153,48 @@ namespace PrintTrafficBuddy.Tools
         columnText1.AddText(new Phrase(string.Format("{0} min", (object) filmDetails.RunTime), FontFactory.GetFont("Arial", 9f)));
         columnText1.Go();
         ColumnText columnText2 = columnText1;
-        string format1 = "In: {0}";
-        DateTime? nullable = filmDetails.In;
-        DateTime dateTime;
+
+        string format1 = "La: {0}";
+        string nullable = filmDetails.Language;
         string str1;
-        if (!nullable.HasValue)
+        if (String.IsNullOrEmpty(nullable))
         {
-          str1 = "YTBC";
+          str1 = "TBC";
         }
         else
         {
-          nullable = filmDetails.In;
-          dateTime = nullable.Value;
-          str1 = dateTime.ToString("dd MMM");
+		  nullable = filmDetails.Language;
+		  str1 = filmDetails.Language.ToString();
         }
+		//Language
         Phrase phrase1 = new Phrase(string.Format(format1, (object) str1), filmDetails.InSuspect ? FontFactory.GetFont("Arial", 10f, 2) : FontFactory.GetFont("Arial", 10f));
         columnText2.AddText(phrase1);
         columnText1.Go();
         ColumnText columnText3 = columnText1;
-        string format2 = "Out: {0}";
-        nullable = filmDetails.Out;
+		//Country
+        string format2 = "Co: {0}";
+        nullable = filmDetails.Country;
         string str2;
-        if (!nullable.HasValue)
+		//If no value, TBC
+		if (String.IsNullOrEmpty(nullable))
         {
-          str2 = "YTBC";
+          str2 = "TBC";
         }
         else
         {
-          nullable = filmDetails.Out;
-          dateTime = nullable.Value;
-          str2 = dateTime.ToString("dd MMM");
+          nullable = filmDetails.Country;
+		  str2 = nullable.ToString();
         }
         Phrase phrase2 = new Phrase(string.Format(format2, (object) str2), filmDetails.OutSuspect ? FontFactory.GetFont("Arial", 10f, 2) : FontFactory.GetFont("Arial", 10f));
         columnText3.AddText(phrase2);
         columnText1.Go();
+
         columnText1.AddText(new Phrase(string.Format("{0} / {1}", (object) filmDetails.Gauge, (object) filmDetails.Ratio), FontFactory.GetFont("Arial", 8f)));
         columnText1.Go();
+
         columnText1.AddText(new Phrase(" "));
         columnText1.Go();
+
         columnText1.AddText(new Phrase(runName, FontFactory.GetFont("Arial", 16f)));
         columnText1.Go();
       }
