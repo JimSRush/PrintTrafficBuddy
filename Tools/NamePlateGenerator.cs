@@ -154,7 +154,7 @@ namespace PrintTrafficBuddy.Tools
         columnText1.Go();
         ColumnText columnText2 = columnText1;
 
-        string format1 = "La: {0}";
+        string format1 = "{0}";
         string nullable = filmDetails.Language;
         string str1;
         if (String.IsNullOrEmpty(nullable))
@@ -172,7 +172,7 @@ namespace PrintTrafficBuddy.Tools
         columnText1.Go();
         ColumnText columnText3 = columnText1;
 		//Country
-        string format2 = "Co: {0}";
+        string format2 = "{0}";
         nullable = filmDetails.Country;
         string str2;
 		//If no value, TBC
@@ -189,7 +189,7 @@ namespace PrintTrafficBuddy.Tools
         columnText3.AddText(phrase2);
         columnText1.Go();
 
-        columnText1.AddText(new Phrase(string.Format("{0} / {1}", (object) filmDetails.Gauge, (object) filmDetails.Ratio), FontFactory.GetFont("Arial", 8f)));
+        columnText1.AddText(new Phrase(string.Format("{0} / {1}", (object) filmDetails.Resolution, (object) filmDetails.Ratio), FontFactory.GetFont("Arial", 8f)));
         columnText1.Go();
 
         columnText1.AddText(new Phrase(" "));

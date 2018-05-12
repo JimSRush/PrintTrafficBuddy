@@ -45,6 +45,8 @@ namespace PrintTrafficBuddy.Tools
 
 	public string CountryCell { get; set; }
 
+	public string ResolutionCell { get; set; }
+
 
     public ExcelExtractor()
     {
@@ -60,6 +62,7 @@ namespace PrintTrafficBuddy.Tools
 
 	  this.LanguageCell = ConfigurationHelper.GetSetting("ExcelOriginColumn", "I");
 	  this.CountryCell = ConfigurationHelper.GetSetting("ExcelOriginColumn", "J");
+	  this.ResolutionCell = ConfigurationHelper.GetSetting("ExcelOriginColumn", "O");
 
 
     }
@@ -83,6 +86,7 @@ namespace PrintTrafficBuddy.Tools
             Genre = worksheet.get_Range((object) (this.GenreCell + (object) index), (object) Missing.Value).Text.ToString(),
             Gauge = worksheet.get_Range((object) (this.GaugeCell + (object) index), (object) Missing.Value).Text.ToString(),
             Ratio = worksheet.get_Range((object) (this.RatioCell + (object) index), (object) Missing.Value).Text.ToString(),
+			Resolution = worksheet.get_Range((object)(this.ResolutionCell + (object)index), (object)Missing.Value).Text.ToString(),
             RunTime = TypeExtensions.AsSafeInt32(worksheet.get_Range((object) (this.RunTimeCell + (object) index), (object) Missing.Value).Value2),
             In = TypeExtensions.AsSafeNullableDateTime(worksheet.get_Range((object) (this.InCell + (object) index), (object) Missing.Value).Text),
 			Language = worksheet.get_Range((object)(this.LanguageCell + (object)index), (object)Missing.Value).Text.ToString(),
