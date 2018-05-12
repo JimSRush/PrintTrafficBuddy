@@ -33,6 +33,7 @@ namespace PrintTrafficBuddy.Model
 
 	public string Country { get; set; }
 
+	public string Resolution { get; set; }
 
     public bool InSuspect { get; set; }
 
