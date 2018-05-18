@@ -118,6 +118,26 @@ namespace PrintTrafficBuddy.Tools
       }
     }
 
+	private static String FormatTitle(String title, int runTime)
+	{
+
+		if (runTime < 65) {
+			return title.Substring(0, Math.Min(18, title.Length)) + "...";
+		//format shorter
+		}
+		return title.Substring(0, Math.Min(30, title.Length));
+	}
+
+	private static iTextSharp.text.Font FormatTitleFont(int runTime) 
+	{ 
+	
+		if (runTime > 60)
+		{
+			return FontFactory.GetFont("Arial", 11f, Font.BOLD);
+		}
+		return FontFactory.GetFont("Arial", 9f, Font.NORMAL);
+	}
+
     private static void LayoutPage(PdfContentByte content, List<FilmDetails> pageFilms, string runName)
     {
       double num1 = 70.0;
@@ -148,47 +168,15 @@ namespace PrintTrafficBuddy.Tools
         content.Rectangle(rectangle);
         ColumnText columnText1 = new ColumnText(content);
         columnText1.SetSimpleColumn((float) num5, (float) num8, (float) num6, (float) num7, 15f, 1);
-        columnText1.AddText(new Phrase(filmDetails.Title.Substring(0, Math.Min(30, filmDetails.Title.Length)), FontFactory.GetFont("Arial", 11f, 1)));
+
+		columnText1.AddText(new Phrase(FormatTitle(filmDetails.Title, filmDetails.RunTime), FormatTitleFont(filmDetails.RunTime)));
         columnText1.Go();
         columnText1.AddText(new Phrase(string.Format("{0} min", (object) filmDetails.RunTime), FontFactory.GetFont("Arial", 9f)));
         columnText1.Go();
         ColumnText columnText2 = columnText1;
 
-        string format1 = "{0}";
-        string nullable = filmDetails.Language;
-        string str1;
-        if (String.IsNullOrEmpty(nullable))
-        {
-          str1 = "TBC";
-        }
-        else
-        {
-		  nullable = filmDetails.Language;
-		  str1 = filmDetails.Language.ToString();
-        }
-		//Language
-        Phrase phrase1 = new Phrase(string.Format(format1, (object) str1), filmDetails.InSuspect ? FontFactory.GetFont("Arial", 10f, 2) : FontFactory.GetFont("Arial", 10f));
-        columnText2.AddText(phrase1);
-        columnText1.Go();
-        ColumnText columnText3 = columnText1;
-		//Country
-        string format2 = "{0}";
-        nullable = filmDetails.Country;
-        string str2;
-		//If no value, TBC
-		if (String.IsNullOrEmpty(nullable))
-        {
-          str2 = "TBC";
-        }
-        else
-        {
-          nullable = filmDetails.Country;
-		  str2 = nullable.ToString();
-        }
-
-		Phrase phrase2 = new Phrase(string.Format(format2, (object) str2.Substring(0, Math.Min(15, str2.Length))), filmDetails.OutSuspect ? FontFactory.GetFont("Arial", 10f, 2) : FontFactory.GetFont("Arial", 10f));
-        columnText3.AddText(phrase2);
-        columnText1.Go();
+		columnText1.AddText(new Phrase(string.Format("{0} / {1}", (object)filmDetails.Language, (object)filmDetails.Country), FontFactory.GetFont("Arial", 8f)));
+		columnText1.Go();
 
         columnText1.AddText(new Phrase(string.Format("{0} / {1}", (object) filmDetails.Resolution, (object) filmDetails.Ratio), FontFactory.GetFont("Arial", 8f)));
         columnText1.Go();
