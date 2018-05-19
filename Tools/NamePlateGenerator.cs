@@ -135,7 +135,51 @@ namespace PrintTrafficBuddy.Tools
 		{
 			return FontFactory.GetFont("Arial", 11f, Font.BOLD);
 		}
-		return FontFactory.GetFont("Arial", 9f, Font.NORMAL);
+		return FontFactory.GetFont("Arial", 9f, Font.BOLD);
+	}
+
+	private static String FormatLanguage(String language, String country) 
+	{
+		if (language == null || country == null) { 
+			return "";
+		}
+		if ((language.Length + country.Length) < 12) 
+		{ 
+			return language; //We ok!
+		}
+		if (language.Length > 7) { 
+			return language.Substring(0, 7);
+		}
+		return language;
+	}
+
+	private static String FormatCountry(String language, String country)
+	{
+		if (language == null || country == null)
+		{
+			return "";
+		}
+
+		if ((language.Length + country.Length) < 12)
+		{
+			return country; //We ok!
+		}
+		if (country.Length > 6)
+		{
+			return country.Substring(0, 6);
+		}
+		return country;
+	}
+
+	private static Phrase FormatLanguageAndCountry(String language, String country, int runTime) 
+	{ 
+	
+	
+	if (runTime < 70) {
+		return new Phrase(string.Format("{0}/{1}", language, country), FontFactory.GetFont("Arial", 6f));
+	}
+
+	return new Phrase(string.Format("{0}/{1}", language, country), FontFactory.GetFont("Arial", 8f));
 	}
 
     private static void LayoutPage(PdfContentByte content, List<FilmDetails> pageFilms, string runName)
@@ -175,9 +219,13 @@ namespace PrintTrafficBuddy.Tools
         columnText1.Go();
         ColumnText columnText2 = columnText1;
 
-		columnText1.AddText(new Phrase(string.Format("{0} / {1}", (object)filmDetails.Language, (object)filmDetails.Country), FontFactory.GetFont("Arial", 8f)));
+		String l = FormatLanguage(filmDetails.Language, filmDetails.Country);
+		String c = FormatCountry(filmDetails.Language, filmDetails.Country);
+		
+		columnText1.AddText(FormatLanguageAndCountry(l, c, filmDetails.RunTime));
 		columnText1.Go();
 
+		//Resolution/ratio
         columnText1.AddText(new Phrase(string.Format("{0} / {1}", (object) filmDetails.Resolution, (object) filmDetails.Ratio), FontFactory.GetFont("Arial", 8f)));
         columnText1.Go();
 
