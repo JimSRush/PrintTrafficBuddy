@@ -120,11 +120,6 @@ namespace PrintTrafficBuddy.Tools
 
 	private static String FormatTitle(String title, int runTime)
 	{
-
-		if (runTime < 65) {
-			return title.Substring(0, Math.Min(18, title.Length)) + "...";
-		//format shorter
-		}
 		return title.Substring(0, Math.Min(30, title.Length));
 	}
 
